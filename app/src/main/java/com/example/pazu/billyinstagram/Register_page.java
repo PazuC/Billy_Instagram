@@ -76,7 +76,7 @@ public class Register_page extends Fragment {
                                     if (response != null) {
 
                                         UserToken userToken = gson.fromJson("Token",UserToken.class);
-                                        Log.d("TAG", "onResponse: " + userToken);
+                                        Log.d("TAG", "onResponse: " + userToken.token);
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
