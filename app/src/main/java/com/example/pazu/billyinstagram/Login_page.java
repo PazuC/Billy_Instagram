@@ -4,11 +4,18 @@ package com.example.pazu.billyinstagram;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 
 
 /**
@@ -27,11 +34,45 @@ public class Login_page extends Fragment {
         View view_login_page = inflater.inflate(R.layout.fragment_login_page, container, false);
         login = view_login_page.findViewById(R.id.login);
         register = view_login_page.findViewById(R.id.register);
-        EditText userName = view_login_page.findViewById(R.id.userName);
-        EditText password = view_login_page.findViewById(R.id.password);
+        userName = view_login_page.findViewById(R.id.userName);
+        password = view_login_page.findViewById(R.id.password);
 
-        /*to do login event
-        -----*/
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Gson gson = new Gson();
+                User user = new User();
+
+                user.userName = userName.getText().toString();
+                user.passwd = password.getText().toString();
+                AndroidNetworking.post("https://hinl.app:9990/billy/login")
+                        .addBodyParameter("data", gson.toJson(user)) // posting json
+                        .setTag("test")
+                        .setPriority(Priority.MEDIUM)
+                        .build()
+                        .getAsString(new StringRequestListener() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    if (response != null) {
+
+                                        UserToken userToken = gson.fromJson(response,UserToken.class);
+                                        Log.d("TAG", "onResponse: " + userToken.token);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                anError.printStackTrace();
+                            }
+                        });
+
+            }
+        });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
