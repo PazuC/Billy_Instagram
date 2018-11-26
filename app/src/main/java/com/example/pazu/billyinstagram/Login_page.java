@@ -26,6 +26,8 @@ public class Login_page extends Fragment {
     private Button register;
     private EditText userName;
     private EditText password;
+    String a = null;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +39,7 @@ public class Login_page extends Fragment {
         userName = view_login_page.findViewById(R.id.userName);
         password = view_login_page.findViewById(R.id.password);
 
-        register.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Gson gson = new Gson();
@@ -58,6 +60,7 @@ public class Login_page extends Fragment {
 
                                         UserToken userToken = gson.fromJson(response,UserToken.class);
                                         Log.d("TAG", "onResponse: " + userToken.token);
+                                        a=userToken.token;
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -70,6 +73,17 @@ public class Login_page extends Fragment {
                                 anError.printStackTrace();
                             }
                         });
+
+                if(a!=""){
+                    ImageItemList_page imageItemList_page = new ImageItemList_page();
+                    Bundle args = new Bundle();
+                    args.putString("Token", a);
+                    imageItemList_page.setArguments(args);
+
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.container, imageItemList_page);
+                    ft.commit();}
+
 
             }
         });
