@@ -62,6 +62,7 @@ public class ImageItemList_page extends Fragment {
         });
         return view_imageItemList_page;
     }
+
     private void startGallery() {
         Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         cameraIntent.setType("image/*");
@@ -69,11 +70,12 @@ public class ImageItemList_page extends Fragment {
             startActivityForResult(cameraIntent, 1000);
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super method removed
-        if(resultCode == RESULT_OK) {
-            if(requestCode == 1000){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1000) {
                 Uri returnUri = data.getData();
                 Bitmap bitmapImage = null;
                 try {
@@ -85,6 +87,6 @@ public class ImageItemList_page extends Fragment {
             }
         }
 
-}
+    }
 
 }
