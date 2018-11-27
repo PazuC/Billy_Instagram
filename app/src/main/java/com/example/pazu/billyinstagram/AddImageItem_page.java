@@ -11,12 +11,19 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -53,6 +60,38 @@ public class AddImageItem_page extends Fragment {
                 addToServerImage.bitmap = bitmapImage;
                 addToServer.title = title.getText().toString();
                 addToServer.desc = description.getText().toString();
+                addToServer.token = getArguments().getString("Token");
+
+                final Gson gson = new Gson();
+                //
+                AndroidNetworking.post("https://hinl.app:9990/billy/item/add")
+                        .addBodyParameter("img", gson.toJson(addToServerImage.bitmap))
+                        .addBodyParameter("data", gson.toJson(addToServer)) // posting json
+                        .setTag("test")
+                        .setPriority(Priority.MEDIUM)
+                        .build()
+                        .getAsString(new StringRequestListener() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    if (response != null) {
+
+                                        ReturnId returnId = gson.fromJson(response, ReturnId.class);
+                                        Log.d("TAG", "onResponse: " + returnId.id);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                anError.printStackTrace();
+                            }
+                        });
+
+                //
             }
         });
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,23 @@ public class ImageItemList_page extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view_imageItemList_page = inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
+
+        final String token = getArguments().getString("Token");
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageItemList_page imageItemList_page = new ImageItemList_page();
+                Bundle args = new Bundle();
+                args.putString("Token", token);
+                imageItemList_page.setArguments(args);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.container, imageItemList_page);
+                ft.commit();
+            }
+        });
+
 
         return view_imageItemList_page;
     }
