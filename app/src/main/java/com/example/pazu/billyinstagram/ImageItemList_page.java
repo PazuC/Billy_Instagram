@@ -12,6 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +37,15 @@ public class ImageItemList_page extends Fragment {
     EditText description;
     Button upload;
 
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view_imageItemList_page = inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
-
+        initRecyclerView(view_imageItemList_page);
         final String token = getArguments().getString("Token");
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +64,18 @@ public class ImageItemList_page extends Fragment {
 
 
         return view_imageItemList_page;
+    }
+
+    private void initRecyclerView(View view) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+
+        // Layout manager
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Retrieve data:
+                //  List<Route> routes = SQLite.select().from(Route.class).queryList();
+
     }
 
 }

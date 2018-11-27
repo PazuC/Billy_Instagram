@@ -78,6 +78,7 @@ public class Login_page extends Fragment {
                     ImageItemList_page imageItemList_page = new ImageItemList_page();
                     Bundle args = new Bundle();
                     args.putString("Token", a);
+                    args.putString("userName",user.userName);
                     imageItemList_page.setArguments(args);
 
                     FragmentTransaction ft = getFragmentManager().beginTransaction();

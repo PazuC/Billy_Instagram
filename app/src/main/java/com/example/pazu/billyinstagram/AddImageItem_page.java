@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,13 @@ public class AddImageItem_page extends Fragment {
 
                                         ReturnId returnId = gson.fromJson(response, ReturnId.class);
                                         Log.d("TAG", "onResponse: " + returnId.id);
+
+                                        if(returnId.id!=""){
+                                            ImageItemList_page imageItemList_page = new ImageItemList_page();
+                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                            ft.replace(R.id.container, imageItemList_page);
+                                            ft.commit();
+                                        }
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
