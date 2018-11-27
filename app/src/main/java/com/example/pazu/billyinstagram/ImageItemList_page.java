@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -36,10 +43,12 @@ public class ImageItemList_page extends Fragment {
     EditText title;
     EditText description;
     Button upload;
+    int imageCount;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +70,35 @@ public class ImageItemList_page extends Fragment {
                 ft.commit();
             }
         });
+        final Gson gson = new Gson();
+        final UserToken userToken = new UserToken();
+        userToken.token = getArguments().getString("Token");
+        AndroidNetworking.post("https://hinl.app:9990/billy/item")
+                .addBodyParameter("data", gson.toJson(userToken)) // posting json
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            if (response != null) {
+
+                                GetFromServer getFromServer = gson.fromJson(response, GetFromServer.class);
+                                Log.d("TAG", "onResponse: ");
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        anError.printStackTrace();
+                    }
+                });
 
 
         return view_imageItemList_page;
@@ -69,12 +107,13 @@ public class ImageItemList_page extends Fragment {
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
+
         // Layout manager
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         // Retrieve data:
-                //  List<Route> routes = SQLite.select().from(Route.class).queryList();
+        //  List<Route> routes = SQLite.select().from(Route.class).queryList();
 
     }
 
