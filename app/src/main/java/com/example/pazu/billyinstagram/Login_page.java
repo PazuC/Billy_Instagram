@@ -26,7 +26,6 @@ public class Login_page extends Fragment {
     private Button register;
     private EditText userName;
     private EditText password;
-    String a = null;
 
 
     @Override
@@ -43,7 +42,7 @@ public class Login_page extends Fragment {
             @Override
             public void onClick(View v) {
                 final Gson gson = new Gson();
-                User user = new User();
+                final User user = new User();
 
                 user.userName = userName.getText().toString();
                 user.passwd = password.getText().toString();
@@ -60,7 +59,18 @@ public class Login_page extends Fragment {
 
                                         UserToken userToken = gson.fromJson(response,UserToken.class);
                                         Log.d("TAG", "onResponse: " + userToken.token);
-                                        a=userToken.token;
+
+
+                                        if(userToken.token!=""){
+                                            ImageItemList_page imageItemList_page = new ImageItemList_page();
+                                            Bundle args = new Bundle();
+                                            args.putString("Token", userToken.token);
+                                            args.putString("userName",user.userName);
+                                            imageItemList_page.setArguments(args);
+
+                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                            ft.replace(R.id.container, imageItemList_page);
+                                            ft.commit();}
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -74,16 +84,7 @@ public class Login_page extends Fragment {
                             }
                         });
 
-                if(a!=""){
-                    ImageItemList_page imageItemList_page = new ImageItemList_page();
-                    Bundle args = new Bundle();
-                    args.putString("Token", a);
-                    args.putString("userName",user.userName);
-                    imageItemList_page.setArguments(args);
 
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.container, imageItemList_page);
-                    ft.commit();}
 
 
             }
