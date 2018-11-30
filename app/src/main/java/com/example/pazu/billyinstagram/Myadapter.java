@@ -10,19 +10,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
+public class Myadapter extends RecyclerView.Adapter<Myadapter.MyViewHolder> {
 
-    private List<String> mData;
+    private List<GetFromServer.Data> mData;
 
-    Myadapter(List<String> data){
-        mData = data;
-    }
-    class ViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         private ImageView imageView;
         private TextView title;
         private TextView description;
 
-        ViewHolder( View itemView) {
+        public MyViewHolder( View itemView) {
             super(itemView);
             imageView = (ImageView)itemView.findViewById(R.id.imageView);
             title = ( TextView)itemView.findViewById(R.id.title);
@@ -31,9 +28,14 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_layout,viewGroup,false);
-        return new ViewHolder(view);
+        return new RecyclerView.ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+
     }
 
     @Override
