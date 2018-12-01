@@ -24,6 +24,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
             imageView = (ImageView)itemView.findViewById(R.id.imageView);
             title = ( TextView)itemView.findViewById(R.id.title);
             description = ( TextView)itemView.findViewById(R.id.description);
+
         }
     }
 
@@ -40,8 +41,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
         GetFromServer.Data data = dataList.get(i);
         viewHolder.title.setText(data.getTitle());
         viewHolder.description.setText(data.getDesc());
-        //viewHolder.imageView.setImageBitmap do someting with Glide
-    }
+        //viewHolder.imageView.setImageBitmap do something with Glide     }
 
 
     @Override
