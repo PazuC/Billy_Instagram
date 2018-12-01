@@ -12,11 +12,8 @@ import java.util.List;
 
 public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<GetFromServer.Data> dataList;
 
-    Myadapter(List<String> data){
-        mData = data;
-    }
     class ViewHolder extends RecyclerView.ViewHolder{
         private ImageView imageView;
         private TextView title;
@@ -31,21 +28,24 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_layout,viewGroup,false);
-        return new ViewHolder(view);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_layout, parent, false);
+
+        return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
-
+        GetFromServer.Data data = dataList.get(i);
+        viewHolder.title.setText(data.getTitle());
+        viewHolder.description.setText(data.getDesc());
+        //viewHolder.imageView.setImageBitmap do someting with Glide
     }
+
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
-
-
 }
