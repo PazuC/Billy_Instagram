@@ -65,9 +65,9 @@ public class AddImageItem_page extends Fragment {
 
                 final Gson gson = new Gson();
                 //
-                AndroidNetworking.post("https://hinl.app:9990/billy/item/add")
-                        .addBodyParameter("img", gson.toJson(addToServerImage.bitmap)) // it is wrong, should use multipart
-                        .addBodyParameter("data", gson.toJson(addToServer)) // posting json
+                AndroidNetworking.upload("https://hinl.app:9990/billy/item/add")
+                        .addMultipartFile("img", imageView)) // it is wrong, should use multipart
+                        .addMultipartFile("data", gson.toJson(addToServer)) // posting json
                         .setTag("test")
                         .setPriority(Priority.MEDIUM)
                         .build()
