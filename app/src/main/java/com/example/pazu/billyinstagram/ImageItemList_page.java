@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.androidnetworking.AndroidNetworking;
@@ -30,6 +31,7 @@ import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -38,22 +40,22 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class ImageItemList_page extends Fragment {
-    ImageView imageView;
     Button add;
-    EditText title;
-    EditText description;
-    Button upload;
-    int imageCount;
+    TextView idTextView;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private Myadapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view_imageItemList_page = inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
+        add = view_imageItemList_page.findViewById(R.id.add);
+        idTextView = view_imageItemList_page.findViewById(R.id.idTextView);
+
         initRecyclerView(view_imageItemList_page);
         final String token = getArguments().getString("Token");
 
@@ -85,6 +87,9 @@ public class ImageItemList_page extends Fragment {
                             if (response != null) {
 
                                 GetFromServer getFromServer = gson.fromJson(response, GetFromServer.class);
+                                adapter.setDataList(getFromServer.data);
+
+                                idTextView.setText(getFromServer.name);
                                 Log.d("TAG", "onResponse: ");
 
                             }
@@ -112,9 +117,11 @@ public class ImageItemList_page extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
+
         // Retrieve data:
         //  List<Route> routes = SQLite.select().from(Route.class).queryList();
-
+        adapter = new Myadapter();
+        recyclerView.setAdapter(adapter);
     }
 
 }

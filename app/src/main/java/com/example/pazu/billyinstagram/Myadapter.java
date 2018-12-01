@@ -1,31 +1,28 @@
 package com.example.pazu.billyinstagram;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
 
-    private List<GetFromServer.Data> dataList;
+    private ArrayList<GetFromServer.Data> dataList = new ArrayList<>();
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView title;
-        private TextView description;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            description = (TextView) itemView.findViewById(R.id.description);
-
-        }
+    public void setDataList(List<GetFromServer.Data> dataList){
+        this.dataList.clear();
+        this.dataList.addAll(dataList);
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -42,12 +39,29 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
         viewHolder.title.setText(data.getTitle());
         viewHolder.description.setText(data.getDesc());
         //viewHolder.imageView.setImageBitmap do something with Glide
-        }
+        Context context = viewHolder.itemView.getContext();
+        Glide.with(context).load("https://hinl.app:9990" + data.imageUrl).into(viewHolder.imageView);
+    }
 
 
-        @Override
-        public int getItemCount () {
-            return dataList.size();
+    @Override
+    public int getItemCount() {
+        return dataList.size();
+    }
+
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageView;
+        private TextView title;
+        private TextView description;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            description = (TextView) itemView.findViewById(R.id.description);
+
         }
     }
-    
+
+}

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -65,7 +66,6 @@ public class Login_page extends Fragment {
                                             ImageItemList_page imageItemList_page = new ImageItemList_page();
                                             Bundle args = new Bundle();
                                             args.putString("Token", userToken.token);
-                                            args.putString("userName",user.userName);
                                             imageItemList_page.setArguments(args);
 
                                             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -80,6 +80,7 @@ public class Login_page extends Fragment {
 
                             @Override
                             public void onError(ANError anError) {
+                                Toast.makeText(getContext(), anError.getErrorBody(), Toast.LENGTH_SHORT).show();
                                 anError.printStackTrace();
                             }
                         });
