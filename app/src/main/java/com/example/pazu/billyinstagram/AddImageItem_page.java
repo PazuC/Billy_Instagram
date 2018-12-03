@@ -46,12 +46,12 @@ public class AddImageItem_page extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view_imageItemList_page = inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
-        imageView = view_imageItemList_page.findViewById(R.id.imageView);
-        add = view_imageItemList_page.findViewById(R.id.add);
-        title = view_imageItemList_page.findViewById(R.id.title);
-        description = view_imageItemList_page.findViewById(R.id.description);
-        upload = view_imageItemList_page.findViewById(R.id.upload);
+        View view_addImageItem_page = inflater.inflate(R.layout.fragment_add_image_item_page, container, false);
+        imageView = view_addImageItem_page.findViewById(R.id.imageView);
+        add = view_addImageItem_page.findViewById(R.id.add);
+        title = view_addImageItem_page.findViewById(R.id.title);
+        description = view_addImageItem_page.findViewById(R.id.description);
+        upload = view_addImageItem_page.findViewById(R.id.upload);
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +118,7 @@ public class AddImageItem_page extends Fragment {
                 }
             }
         });
-        return view_imageItemList_page;
+        return view_addImageItem_page;
     }
 
     private void startGallery() {

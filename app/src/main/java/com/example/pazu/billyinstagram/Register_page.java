@@ -29,10 +29,6 @@ public class Register_page extends Fragment {
     EditText signUpName;
     EditText signUpPassword;
 
-    public Register_page() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +71,7 @@ public class Register_page extends Fragment {
                                 try {
                                     if (response != null) {
 
-                                        UserToken userToken = gson.fromJson(response,UserToken.class);
+                                        UserToken userToken = gson.fromJson(response, UserToken.class);
                                         Log.d("TAG", "onResponse: " + userToken.token);
                                     }
                                 } catch (Exception e) {

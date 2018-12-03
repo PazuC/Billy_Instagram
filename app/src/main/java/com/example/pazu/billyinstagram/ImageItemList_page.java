@@ -62,13 +62,13 @@ public class ImageItemList_page extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageItemList_page imageItemList_page = new ImageItemList_page();
+                AddImageItem_page addImageItem_page = new AddImageItem_page();
                 Bundle args = new Bundle();
                 args.putString("Token", token);
-                imageItemList_page.setArguments(args);
+                addImageItem_page.setArguments(args);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.container, imageItemList_page);
+                ft.replace(R.id.container, addImageItem_page);
                 ft.commit();
             }
         });

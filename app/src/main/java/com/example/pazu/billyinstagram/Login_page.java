@@ -58,11 +58,11 @@ public class Login_page extends Fragment {
                                 try {
                                     if (response != null) {
 
-                                        UserToken userToken = gson.fromJson(response,UserToken.class);
+                                        UserToken userToken = gson.fromJson(response, UserToken.class);
                                         Log.d("TAG", "onResponse: " + userToken.token);
 
 
-                                        if(userToken.token!=""){
+                                        if (userToken.token != "") {
                                             ImageItemList_page imageItemList_page = new ImageItemList_page();
                                             Bundle args = new Bundle();
                                             args.putString("Token", userToken.token);
@@ -70,7 +70,8 @@ public class Login_page extends Fragment {
 
                                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                                             ft.replace(R.id.container, imageItemList_page);
-                                            ft.commit();}
+                                            ft.commit();
+                                        }
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -86,8 +87,6 @@ public class Login_page extends Fragment {
                         });
 
 
-
-
             }
         });
 
@@ -99,7 +98,8 @@ public class Login_page extends Fragment {
                 ft.replace(R.id.container, register_page);
                 ft.commit();
             }
-        });return view_login_page;
+        });
+        return view_login_page;
 
 
     }
