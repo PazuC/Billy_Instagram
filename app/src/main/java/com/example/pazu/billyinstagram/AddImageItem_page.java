@@ -105,16 +105,16 @@ public class AddImageItem_page extends Fragment {
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE);
-
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    startGallery();
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
+            public void onClick(View view) {
+                if(ActivityCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             2000);
+                }
+                else {
+                    startGallery();
                 }
             }
         });
@@ -131,7 +131,7 @@ public class AddImageItem_page extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super method removed
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1000) {
                 Uri returnUri = data.getData();
