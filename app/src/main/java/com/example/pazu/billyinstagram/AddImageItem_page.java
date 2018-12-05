@@ -61,9 +61,7 @@ public class AddImageItem_page extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddToServerImage addToServerImage = new AddToServerImage();
                 AddToServer addToServer = new AddToServer();
-                addToServerImage.bitmap = bitmapImage;
                 addToServer.title = title.getText().toString();
                 addToServer.desc = description.getText().toString();
                 addToServer.token = getArguments().getString("Token");
@@ -150,6 +148,7 @@ public class AddImageItem_page extends Fragment {
                     String imagePath = cursor.getString(columnIndex);
                     imageFile = new File(imagePath);
                     cursor.close();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
