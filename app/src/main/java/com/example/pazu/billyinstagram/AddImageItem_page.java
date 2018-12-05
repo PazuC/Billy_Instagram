@@ -4,7 +4,9 @@ package com.example.pazu.billyinstagram;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -26,6 +29,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
@@ -41,6 +45,7 @@ public class AddImageItem_page extends Fragment {
     EditText description;
     Button upload;
     Bitmap bitmapImage = null;
+    File imageFile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +71,8 @@ public class AddImageItem_page extends Fragment {
                 final Gson gson = new Gson();
                 //
                 AndroidNetworking.upload("https://hinl.app:9990/billy/item/add")
-//                        .addMultipartFile("img", imageView) // it is wrong, should use multipart
-//                        .addMultipartFile("data", gson.toJson(addToServer)) // posting json
+                        .addMultipartFile("img", imageFile)
+                        .addMultipartParameter("data", gson.toJson(addToServer))
                         .setTag("test")
                         .setPriority(Priority.MEDIUM)
                         .build()
@@ -80,7 +85,7 @@ public class AddImageItem_page extends Fragment {
                                         ReturnId returnId = gson.fromJson(response, ReturnId.class);
                                         Log.d("TAG", "onResponse: " + returnId.id);
 
-                                        if(returnId.id!=""){
+                                        if (returnId.id != "") {
                                             ImageItemList_page imageItemList_page = new ImageItemList_page();
                                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                                             ft.replace(R.id.container, imageItemList_page);
@@ -99,21 +104,18 @@ public class AddImageItem_page extends Fragment {
                             }
                         });
 
-                //
             }
         });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                {
+                if (ActivityCompat.checkSelfPermission(getActivity(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             2000);
-                }
-                else {
+                } else {
                     startGallery();
                 }
             }
@@ -131,13 +133,23 @@ public class AddImageItem_page extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        //super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1000) {
                 Uri returnUri = data.getData();
                 bitmapImage = null;
                 try {
                     bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), returnUri);
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                    Cursor cursor = getActivity().getContentResolver().query(returnUri,
+                            filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imagePath = cursor.getString(columnIndex);
+                    imageFile = new File(imagePath);
+                    cursor.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
