@@ -85,9 +85,16 @@ public class AddImageItem_page extends Fragment {
 
                                         if (returnId.id != "") {
                                             ImageItemList_page imageItemList_page = new ImageItemList_page();
+                                            Bundle args = new Bundle();
+                                            UserToken userToken = new UserToken();
+                                            userToken.token = getArguments().getString("Token");
+                                            args.putString("Token", userToken.token);
+                                            imageItemList_page.setArguments(args);
+
                                             FragmentTransaction ft = getFragmentManager().beginTransaction();
                                             ft.replace(R.id.container, imageItemList_page);
                                             ft.commit();
+
                                         }
                                     }
                                 } catch (Exception e) {

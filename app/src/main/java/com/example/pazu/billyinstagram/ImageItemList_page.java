@@ -74,6 +74,7 @@ public class ImageItemList_page extends Fragment {
         });
         final Gson gson = new Gson();
         final UserToken userToken = new UserToken();
+
         userToken.token = getArguments().getString("Token");
         AndroidNetworking.post("https://hinl.app:9990/billy/item")
                 .addBodyParameter("data", gson.toJson(userToken)) // posting json
