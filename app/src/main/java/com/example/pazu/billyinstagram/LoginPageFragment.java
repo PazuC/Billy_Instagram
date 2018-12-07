@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Login_page extends Fragment {
+public class LoginPageFragment extends Fragment {
     private Button login;
     private Button register;
     private EditText userName;
@@ -63,13 +63,13 @@ public class Login_page extends Fragment {
 
 
                                         if (userToken.token != "") {
-                                            ImageItemList_page imageItemList_page = new ImageItemList_page();
+                                            ImageItemListPageFragment imageItemListPageFragment = new ImageItemListPageFragment();
                                             Bundle args = new Bundle();
                                             args.putString("Token", userToken.token);
-                                            imageItemList_page.setArguments(args);
+                                            imageItemListPageFragment.setArguments(args);
 
                                             FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                            ft.replace(R.id.container, imageItemList_page);
+                                            ft.replace(R.id.container, imageItemListPageFragment);
                                             ft.commit();
                                         }
                                     }
@@ -93,9 +93,9 @@ public class Login_page extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Register_page register_page = new Register_page();
+                RegisterPageFragment registerPageFragment = new RegisterPageFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.container, register_page);
+                ft.replace(R.id.container, registerPageFragment);
                 ft.commit();
             }
         });

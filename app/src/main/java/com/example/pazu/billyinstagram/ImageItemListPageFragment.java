@@ -39,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ImageItemList_page extends Fragment {
+public class ImageItemListPageFragment extends Fragment {
     Button add;
     TextView idTextView;
 
@@ -62,13 +62,13 @@ public class ImageItemList_page extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddImageItem_page addImageItem_page = new AddImageItem_page();
+                AddImageItemPageFragment addImageItemPageFragment = new AddImageItemPageFragment();
                 Bundle args = new Bundle();
                 args.putString("Token", token);
-                addImageItem_page.setArguments(args);
+                addImageItemPageFragment.setArguments(args);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.container, addImageItem_page);
+                ft.replace(R.id.container, addImageItemPageFragment);
                 ft.commit();
             }
         });

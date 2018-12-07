@@ -17,13 +17,11 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 
-import okhttp3.Response;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Register_page extends Fragment {
+public class RegisterPageFragment extends Fragment {
     private Button register;
     private Button back;
     EditText signUpName;
@@ -45,7 +43,7 @@ public class Register_page extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Login_page login_page = new Login_page();
+                LoginPageFragment login_page = new LoginPageFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.container, login_page);
                 ft.commit();

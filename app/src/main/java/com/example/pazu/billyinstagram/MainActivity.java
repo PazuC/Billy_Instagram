@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         fmgr = getSupportFragmentManager();
 
-        login_page = new Login_page();
+        login_page = new LoginPageFragment();
 
         fragmentTransaction = fmgr.beginTransaction();
 

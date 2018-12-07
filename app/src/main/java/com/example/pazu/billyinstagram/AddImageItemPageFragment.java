@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.content.Context;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -38,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddImageItem_page extends Fragment {
+public class AddImageItemPageFragment extends Fragment {
     ImageView imageView;
     Button add;
     EditText title;
@@ -84,15 +81,15 @@ public class AddImageItem_page extends Fragment {
                                         Log.d("TAG", "onResponse: " + returnId.id);
 
                                         if (returnId.id != "") {
-                                            ImageItemList_page imageItemList_page = new ImageItemList_page();
+                                            ImageItemListPageFragment imageItemListPageFragment = new ImageItemListPageFragment();
                                             Bundle args = new Bundle();
                                             UserToken userToken = new UserToken();
                                             userToken.token = getArguments().getString("Token");
                                             args.putString("Token", userToken.token);
-                                            imageItemList_page.setArguments(args);
+                                            imageItemListPageFragment.setArguments(args);
 
                                             FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                            ft.replace(R.id.container, imageItemList_page);
+                                            ft.replace(R.id.container, imageItemListPageFragment);
                                             ft.commit();
 
                                         }
