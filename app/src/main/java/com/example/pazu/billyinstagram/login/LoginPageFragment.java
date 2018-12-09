@@ -27,7 +27,7 @@ import com.google.gson.Gson;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginPageFragment extends Fragment {
+public class LoginPageFragment extends Fragment implements LoginContract.View{
     private Button login;
     private Button register;
     private EditText userName;
@@ -109,4 +109,38 @@ public class LoginPageFragment extends Fragment {
 
     }
 
+    @Override
+    public void showRegisterPage() {
+
+    }
+
+    @Override
+    public void showImageListPage() {
+
+    }
+
+    @Override
+    public void showUusernameTooShortError() {
+
+    }
+
+    @Override
+    public void usernameTooLongError() {
+
+    }
+
+    @Override
+    public void passwordTooShortError() {
+
+    }
+
+    @Override
+    public void passwordTooLongError() {
+
+    }
+
+    @Override
+    public void serverResponseError(String error) {
+
+    }
 }
