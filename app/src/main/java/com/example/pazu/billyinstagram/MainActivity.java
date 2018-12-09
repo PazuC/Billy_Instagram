@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.androidnetworking.AndroidNetworking;
+import com.example.pazu.billyinstagram.login.LoginPageFragment;
 
 public class MainActivity extends AppCompatActivity {
     private FragmentManager fmgr;

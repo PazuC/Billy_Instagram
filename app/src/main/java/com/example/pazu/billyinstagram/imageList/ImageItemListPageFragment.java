@@ -1,17 +1,9 @@
-package com.example.pazu.billyinstagram;
+package com.example.pazu.billyinstagram.imageList;
 
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -28,12 +18,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.pazu.billyinstagram.R;
+import com.example.pazu.billyinstagram.imageUpload.AddImageItemPageFragment;
+import com.example.pazu.billyinstagram.model.image.ImageItemResponse;
+import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -44,7 +33,7 @@ public class ImageItemListPageFragment extends Fragment {
     TextView idTextView;
 
     private RecyclerView recyclerView;
-    private Myadapter adapter;
+    private ImageItemAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -87,10 +76,10 @@ public class ImageItemListPageFragment extends Fragment {
                         try {
                             if (response != null) {
 
-                                GetFromServer getFromServer = gson.fromJson(response, GetFromServer.class);
-                                adapter.setDataList(getFromServer.data);
+                                ImageItemResponse imageItemResponse = gson.fromJson(response, ImageItemResponse.class);
+                                adapter.setDataList(imageItemResponse.data);
 
-                                idTextView.setText(getFromServer.name);
+                                idTextView.setText(imageItemResponse.name);
                                 Log.d("TAG", "onResponse: ");
 
                             }
@@ -121,7 +110,7 @@ public class ImageItemListPageFragment extends Fragment {
 
         // Retrieve data:
         //  List<Route> routes = SQLite.select().from(Route.class).queryList();
-        adapter = new Myadapter();
+        adapter = new ImageItemAdapter();
         recyclerView.setAdapter(adapter);
     }
 

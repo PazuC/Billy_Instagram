@@ -1,4 +1,4 @@
-package com.example.pazu.billyinstagram;
+package com.example.pazu.billyinstagram.register;
 
 
 import android.os.Bundle;
@@ -15,6 +15,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.pazu.billyinstagram.R;
+import com.example.pazu.billyinstagram.login.LoginPageFragment;
+import com.example.pazu.billyinstagram.model.user.User;
+import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
 

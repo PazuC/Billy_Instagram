@@ -1,16 +1,16 @@
-package com.example.pazu.billyinstagram;
+package com.example.pazu.billyinstagram.model.image;
 
 import java.util.ArrayList;
 
-public class GetFromServer {
+public class ImageItemResponse {
     public String name;
     public ArrayList<Data> data;
 
     public static class Data {
-        String id;
-        String imageUrl;
-        String title;
-        String desc;
+        public String id;
+        public String imageUrl;
+        public String title;
+        public String desc;
 
 
         public String getTitle() {

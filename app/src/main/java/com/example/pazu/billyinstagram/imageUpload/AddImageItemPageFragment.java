@@ -1,4 +1,4 @@
-package com.example.pazu.billyinstagram;
+package com.example.pazu.billyinstagram.imageUpload;
 
 
 import android.Manifest;
@@ -24,6 +24,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.pazu.billyinstagram.imageList.ImageItemListPageFragment;
+import com.example.pazu.billyinstagram.R;
+import com.example.pazu.billyinstagram.model.image.AddImageItem;
+import com.example.pazu.billyinstagram.model.image.AddImageItemResponse;
+import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -36,12 +41,13 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class AddImageItemPageFragment extends Fragment {
+
+    private static final int PHOTO_ALBUM_REQUEST_CODE = 0x10;
     ImageView imageView;
     Button add;
     EditText title;
     EditText description;
     Button upload;
-    Bitmap bitmapImage = null;
     File imageFile;
 
     @Override
@@ -58,16 +64,16 @@ public class AddImageItemPageFragment extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddToServer addToServer = new AddToServer();
-                addToServer.title = title.getText().toString();
-                addToServer.desc = description.getText().toString();
-                addToServer.token = getArguments().getString("Token");
+                AddImageItem addImageItem = new AddImageItem();
+                addImageItem.title = title.getText().toString();
+                addImageItem.desc = description.getText().toString();
+                addImageItem.token = getArguments().getString("Token");
 
                 final Gson gson = new Gson();
                 //
                 AndroidNetworking.upload("https://hinl.app:9990/billy/item/add")
                         .addMultipartFile("img", imageFile)
-                        .addMultipartParameter("data", gson.toJson(addToServer))
+                        .addMultipartParameter("data", gson.toJson(addImageItem))
                         .setTag("test")
                         .setPriority(Priority.MEDIUM)
                         .build()
@@ -77,10 +83,10 @@ public class AddImageItemPageFragment extends Fragment {
                                 try {
                                     if (response != null) {
 
-                                        ReturnId returnId = gson.fromJson(response, ReturnId.class);
-                                        Log.d("TAG", "onResponse: " + returnId.id);
+                                        AddImageItemResponse addImageItemResponse = gson.fromJson(response, AddImageItemResponse.class);
+                                        Log.d("TAG", "onResponse: " + addImageItemResponse.id);
 
-                                        if (returnId.id != "") {
+                                        if (addImageItemResponse.id != "") {
                                             ImageItemListPageFragment imageItemListPageFragment = new ImageItemListPageFragment();
                                             Bundle args = new Bundle();
                                             UserToken userToken = new UserToken();
@@ -129,7 +135,7 @@ public class AddImageItemPageFragment extends Fragment {
         Intent cameraIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         cameraIntent.setType("image/*");
         if (cameraIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, 1000);
+            startActivityForResult(cameraIntent, PHOTO_ALBUM_REQUEST_CODE);
         }
     }
 
@@ -137,9 +143,9 @@ public class AddImageItemPageFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1000) {
+            if (requestCode == PHOTO_ALBUM_REQUEST_CODE) {
                 Uri returnUri = data.getData();
-                bitmapImage = null;
+                Bitmap bitmapImage = null;
                 try {
                     bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), returnUri);
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};

@@ -1,9 +1,8 @@
-package com.example.pazu.billyinstagram;
+package com.example.pazu.billyinstagram.imageList;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.pazu.billyinstagram.R;
+import com.example.pazu.billyinstagram.model.image.ImageItemResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
+public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.ViewHolder> {
 
-    private ArrayList<GetFromServer.Data> dataList = new ArrayList<>();
+    private ArrayList<ImageItemResponse.Data> dataList = new ArrayList<>();
 
-    public void setDataList(List<GetFromServer.Data> dataList){
+    public void setDataList(List<ImageItemResponse.Data> dataList){
         this.dataList.clear();
         this.dataList.addAll(dataList);
         this.notifyDataSetChanged();
@@ -35,7 +36,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        GetFromServer.Data data = dataList.get(i);
+        ImageItemResponse.Data data = dataList.get(i);
         viewHolder.title.setText(data.getTitle());
         viewHolder.description.setText(data.getDesc());
         //viewHolder.imageView.setImageBitmap do something with Glide
