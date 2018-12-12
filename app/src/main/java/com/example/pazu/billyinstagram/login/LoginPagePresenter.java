@@ -1,15 +1,70 @@
 package com.example.pazu.billyinstagram.login;
 
-public class LoginPagePresenter implements LoginContract.Presenter{
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.View;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.example.pazu.billyinstagram.R;
+import com.example.pazu.billyinstagram.model.user.User;
+import com.example.pazu.billyinstagram.model.user.UserToken;
+import com.example.pazu.billyinstagram.register.RegisterPageFragment;
+import com.google.gson.Gson;
+
+public class LoginPagePresenter implements LoginContract.Presenter {
+    LoginPageFragment loginPageFragment;
 
     @Override
     public void onLoginClick(String username, String password) {
+       /* loginPageFragment.usernameTooLongError();
+        loginPageFragment.usernameTooShortError();
+        loginPageFragment.passwordTooLongError();
+        loginPageFragment.passwordTooShortError();
+        loginPageFragment.showImageListPage();*/
 
+        User user = new User();
+        final Gson gson = new Gson();
+
+        user.userName = username;
+        user.passwd = password;
+        AndroidNetworking.post("https://hinl.app:9990/billy/login")
+                .addBodyParameter("data", gson.toJson(user)) // posting json
+                .setTag("test")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            if (response != null) {
+
+                                UserToken userToken = gson.fromJson(response, UserToken.class);
+                                Log.d("TAG", "onResponse: " + userToken.token);
+
+                                if (userToken.token != "") {
+                                    loginPageFragment.showImageListPage();
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        loginPageFragment.serverResponseError(anError.getErrorBody());
+                        anError.printStackTrace();
+                    }
+                });
     }
 
     @Override
     public void onRegisterClick() {
-
+        loginPageFragment.showRegisterPage();
     }
 
     @Override

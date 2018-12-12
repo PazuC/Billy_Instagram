@@ -1,19 +1,30 @@
 package com.example.pazu.billyinstagram.login;
 
 public interface LoginContract {
-    interface View{
+
+    interface View {
         void showRegisterPage();
+
         void showImageListPage();
-        void showUusernameTooShortError();
+
+        void usernameTooShortError();
+
         void usernameTooLongError();
+
         void passwordTooShortError();
+
         void passwordTooLongError();
+
         void serverResponseError(String error);
     }
-    interface Presenter{
+
+    interface Presenter {
         void onLoginClick(String username, String password);
+
         void onRegisterClick();
+
         void onChangeUsername(String username);
+
         void onChangePassword(String password);
     }
 }
