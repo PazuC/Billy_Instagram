@@ -2,6 +2,8 @@ package com.example.pazu.billyinstagram.imageList;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,75 +30,46 @@ import com.google.gson.Gson;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ImageItemListPageFragment extends Fragment {
+public class ImageItemListPageFragment extends Fragment implements ImageItemListContract.View{
     Button add;
     TextView idTextView;
 
     private RecyclerView recyclerView;
     private ImageItemAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    ImageItemListPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view_imageItemList_page = inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
-        add = view_imageItemList_page.findViewById(R.id.add);
-        idTextView = view_imageItemList_page.findViewById(R.id.idTextView);
+        return inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
 
-        initRecyclerView(view_imageItemList_page);
-        final String token = getArguments().getString("Token");
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        presenter = new ImageItemListPresenter();
+        presenter.setView(this);
+
+        add = view.findViewById(R.id.add);
+        idTextView = view.findViewById(R.id.idTextView);
+        String token = getArguments().getString("Token");
+        presenter.requestImage(token);
+
+        initRecyclerView(view);
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddImageItemPageFragment addImageItemPageFragment = new AddImageItemPageFragment();
-                Bundle args = new Bundle();
-                args.putString("Token", token);
-                addImageItemPageFragment.setArguments(args);
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.container, addImageItemPageFragment);
-                ft.commit();
+                String token = getArguments().getString("Token");
+                presenter.onAddClick(token);
             }
         });
-        final Gson gson = new Gson();
-        final UserToken userToken = new UserToken();
-
-        userToken.token = getArguments().getString("Token");
-        AndroidNetworking.post("https://hinl.app:9990/billy/item")
-                .addBodyParameter("data", gson.toJson(userToken)) // posting json
-                .setTag("test")
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            if (response != null) {
-
-                                ImageItemResponse imageItemResponse = gson.fromJson(response, ImageItemResponse.class);
-                                adapter.setDataList(imageItemResponse.data);
-
-                                idTextView.setText(imageItemResponse.name);
-                                Log.d("TAG", "onResponse: ");
-
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        anError.printStackTrace();
-                    }
-                });
-
-
-        return view_imageItemList_page;
     }
 
     private void initRecyclerView(View view) {
@@ -112,6 +85,25 @@ public class ImageItemListPageFragment extends Fragment {
         //  List<Route> routes = SQLite.select().from(Route.class).queryList();
         adapter = new ImageItemAdapter();
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void showAddImageItemPage(String string) {
+        AddImageItemPageFragment addImageItemPageFragment = new AddImageItemPageFragment();
+        Bundle args = new Bundle();
+        args.putString("Token", string);
+        addImageItemPageFragment.setArguments(args);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.container, addImageItemPageFragment);
+        ft.commit();
+    }
+
+    @Override
+    public void showIdTextView(String string) {
+        idTextView.setText(string);
+    }
+
     }
 
 }

@@ -3,8 +3,6 @@ package com.example.pazu.billyinstagram.login;
 public interface LoginContract {
 
     interface View {
-
-
         void showRegisterPage();
 
         void showImageListPage(String string);
@@ -21,7 +19,6 @@ public interface LoginContract {
     }
 
     interface Presenter {
-
         void setView(View view);
 
         void onLoginClick(String username, String password);
