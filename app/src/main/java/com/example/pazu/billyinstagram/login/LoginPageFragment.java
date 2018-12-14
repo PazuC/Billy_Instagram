@@ -6,12 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -34,7 +37,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     private Button register;
     private EditText userName;
     private EditText password;
-
+    private TextView userNameError;
     LoginPagePresenter presenter;
 
 
@@ -55,9 +58,11 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
         register = view.findViewById(R.id.register);
         userName = view.findViewById(R.id.userName);
         password = view.findViewById(R.id.password);
-
+        userNameError = view.findViewById(R.id.userNameError);
         presenter = new LoginPagePresenter();
         presenter.setView(this);
+
+
 
 
 
@@ -101,10 +106,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void usernameTooShortError() {
-        int length = userName.getText().toString().length();
-        if (length < 8) {
-
-        }
+       userNameError.setText("too short");
     }
 
     @Override
@@ -117,11 +119,9 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void passwordTooShortError() {
-        int length = password.getText().toString().length();
-        if (length < 8) {
 
         }
-    }
+
 
     @Override
     public void passwordTooLongError() {

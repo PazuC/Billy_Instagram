@@ -1,5 +1,7 @@
 package com.example.pazu.billyinstagram.login;
 
+import android.text.TextWatcher;
+
 public interface LoginContract {
 
     interface View {
@@ -19,6 +21,7 @@ public interface LoginContract {
     }
 
     interface Presenter {
+
         void setView(View view);
 
         void onLoginClick(String username, String password);

@@ -1,6 +1,8 @@
 package com.example.pazu.billyinstagram.login;
 
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
@@ -17,6 +19,7 @@ import com.google.gson.Gson;
 public class LoginPagePresenter implements LoginContract.Presenter {
 
     LoginContract.View view;
+
 
     public void setView(LoginContract.View view) {
         this.view = view;
@@ -69,7 +72,7 @@ public class LoginPagePresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void onChangeUsername(String username) {
+    public void onChangeUsername(final String username) {
 
     }
 
