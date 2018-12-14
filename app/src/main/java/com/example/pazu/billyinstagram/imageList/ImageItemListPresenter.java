@@ -41,11 +41,12 @@ public class ImageItemListPresenter implements ImageItemListContract.Presenter {
                             if (response != null) {
 
                                 ImageItemResponse imageItemResponse = gson.fromJson(response, ImageItemResponse.class);
+                                view.showIdTextView(imageItemResponse.name);
 
                                 ImageItemAdapter adapter = new ImageItemAdapter();
                                 adapter.setDataList(imageItemResponse.data);
-
-                                view.showIdTextView(imageItemResponse.name);
+                                view.setLayoutManager();
+                                view.setAdapter(adapter);
 
                                 Log.d("TAG", "onResponse: ");
 
@@ -53,7 +54,6 @@ public class ImageItemListPresenter implements ImageItemListContract.Presenter {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override

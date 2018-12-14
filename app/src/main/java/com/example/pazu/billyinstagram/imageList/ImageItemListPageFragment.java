@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ import com.google.gson.Gson;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ImageItemListPageFragment extends Fragment implements ImageItemListContract.View{
+public class ImageItemListPageFragment extends Fragment implements ImageItemListContract.View {
     Button add;
     TextView idTextView;
 
@@ -45,10 +46,9 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_image_item_list__page, container, false);
-
     }
 
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         presenter = new ImageItemListPresenter();
@@ -56,11 +56,10 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
 
         add = view.findViewById(R.id.add);
         idTextView = view.findViewById(R.id.idTextView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+
         String token = getArguments().getString("Token");
         presenter.requestImage(token);
-
-        initRecyclerView(view);
-
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -72,19 +71,15 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
         });
     }
 
-    private void initRecyclerView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+    @Override
+    public void setAdapter(ImageItemAdapter imageItemAdapter) {
+        recyclerView.setAdapter(imageItemAdapter);
+    }
 
-
-        // Layout manager
+    @Override
+    public void setLayoutManager() {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-
-        // Retrieve data:
-        //  List<Route> routes = SQLite.select().from(Route.class).queryList();
-        adapter = new ImageItemAdapter();
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -104,6 +99,5 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
         idTextView.setText(string);
     }
 
-    
 
 }
