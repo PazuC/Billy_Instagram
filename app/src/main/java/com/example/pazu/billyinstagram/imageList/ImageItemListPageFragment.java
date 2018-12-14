@@ -104,6 +104,6 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
         idTextView.setText(string);
     }
 
-    }
+    
 
 }
