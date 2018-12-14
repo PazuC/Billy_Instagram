@@ -34,9 +34,8 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     private Button register;
     private EditText userName;
     private EditText password;
-    View view_login_page;
-    UserToken userToken;
-    private LoginPagePresenter loginPagePresenter;
+
+    LoginPagePresenter presenter;
 
 
     @Override
@@ -44,26 +43,28 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        view_login_page = inflater.inflate(R.layout.fragment_login_page, container, false);
-        return view_login_page;
+       return inflater.inflate(R.layout.fragment_login_page, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        login = view_login_page.findViewById(R.id.login);
-        register = view_login_page.findViewById(R.id.register);
-        userName = view_login_page.findViewById(R.id.userName);
-        password = view_login_page.findViewById(R.id.password);
+        login = view.findViewById(R.id.login);
+        register = view.findViewById(R.id.register);
+        userName = view.findViewById(R.id.userName);
+        password = view.findViewById(R.id.password);
 
-        loginPagePresenter = new LoginPagePresenter();
+        presenter = new LoginPagePresenter();
+        presenter.setView(this);
+
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginPagePresenter.onLoginClick(userName.getText().toString(),password.getText().toString());
+                presenter.onLoginClick(userName.getText().toString(),password.getText().toString());
             }
         });
 
@@ -71,7 +72,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
             @Override
             public void onClick(View v) {
 
-                loginPagePresenter.onRegisterClick();
+                presenter.onRegisterClick();
 
             }
         });
@@ -90,7 +91,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     public void showImageListPage() {
         ImageItemListPageFragment imageItemListPageFragment = new ImageItemListPageFragment();
         Bundle args = new Bundle();
-        args.putString("Token", userToken.token);
+        //args.putString("Token", userToken.token); dont need token
         imageItemListPageFragment.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();

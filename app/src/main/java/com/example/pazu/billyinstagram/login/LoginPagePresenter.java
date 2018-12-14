@@ -15,7 +15,12 @@ import com.example.pazu.billyinstagram.register.RegisterPageFragment;
 import com.google.gson.Gson;
 
 public class LoginPagePresenter implements LoginContract.Presenter {
-    LoginPageFragment loginPageFragment;
+
+    LoginContract.View view;
+    public void setView(LoginContract.View view){
+        this.view = view;
+    }
+
 
     @Override
     public void onLoginClick(String username, String password) {
@@ -46,7 +51,7 @@ public class LoginPagePresenter implements LoginContract.Presenter {
                                 Log.d("TAG", "onResponse: " + userToken.token);
 
                                 if (userToken.token != "") {
-                                    loginPageFragment.showImageListPage();
+                                    view.showImageListPage();
                                 }
                             }
                         } catch (Exception e) {
@@ -56,7 +61,7 @@ public class LoginPagePresenter implements LoginContract.Presenter {
 
                     @Override
                     public void onError(ANError anError) {
-                        loginPageFragment.serverResponseError(anError.getErrorBody());
+                        view.serverResponseError(anError.getErrorBody());
                         anError.printStackTrace();
                     }
                 });
@@ -64,7 +69,7 @@ public class LoginPagePresenter implements LoginContract.Presenter {
 
     @Override
     public void onRegisterClick() {
-        loginPageFragment.showRegisterPage();
+        view.showRegisterPage();
     }
 
     @Override
