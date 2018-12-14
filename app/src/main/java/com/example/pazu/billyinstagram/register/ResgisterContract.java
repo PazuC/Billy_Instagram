@@ -1,13 +1,8 @@
-package com.example.pazu.billyinstagram.login;
+package com.example.pazu.billyinstagram.register;
 
-public interface LoginContract {
-
+public interface ResgisterContract {
     interface View {
-
-
-        void showRegisterPage();
-
-        void showImageListPage(String string);
+        void showLoginPage();
 
         void usernameTooShortError();
 
@@ -21,12 +16,11 @@ public interface LoginContract {
     }
 
     interface Presenter {
-
         void setView(View view);
 
-        void onLoginClick(String username, String password);
+        void onRegisterClick(String username, String password);
 
-        void onRegisterClick();
+        void onBackClick();
 
         void onChangeUsername(String username);
 

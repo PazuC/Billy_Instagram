@@ -88,10 +88,10 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void showImageListPage() {
+    public void showImageListPage(String string) {
         ImageItemListPageFragment imageItemListPageFragment = new ImageItemListPageFragment();
         Bundle args = new Bundle();
-        //args.putString("Token", userToken.token); dont need token
+        args.putString("Token", string);
         imageItemListPageFragment.setArguments(args);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -103,8 +103,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     public void usernameTooShortError() {
         int length = userName.getText().toString().length();
         if (length < 8) {
-            Toast.makeText(getContext(), "Length of username should more than 8.", Toast.LENGTH_SHORT).show();
-            return;
+
         }
     }
 
@@ -112,8 +111,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     public void usernameTooLongError() {
         int length = userName.getText().toString().length();
         if (length > 30) {
-            Toast.makeText(getContext(), "Length of username should less than 30.", Toast.LENGTH_SHORT).show();
-            return;
+
         }
     }
 
@@ -121,8 +119,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     public void passwordTooShortError() {
         int length = password.getText().toString().length();
         if (length < 8) {
-            Toast.makeText(getContext(), "Length of password should more than 8.", Toast.LENGTH_SHORT).show();
-            return;
+
         }
     }
 
@@ -130,14 +127,12 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     public void passwordTooLongError() {
         int length = password.getText().toString().length();
         if (length > 30) {
-            Toast.makeText(getContext(), "Length of password should less than 30.", Toast.LENGTH_SHORT).show();
-            return;
+
         }
     }
 
     @Override
     public void serverResponseError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-        return;
+        // show serverResponse not in a toast way
     }
 }

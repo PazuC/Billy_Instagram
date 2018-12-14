@@ -2,6 +2,8 @@ package com.example.pazu.billyinstagram.register;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -25,73 +27,84 @@ import com.google.gson.Gson;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterPageFragment extends Fragment {
+public class RegisterPageFragment extends Fragment implements ResgisterContract.View {
     private Button register;
     private Button back;
     EditText signUpName;
     EditText signUpPassword;
+
+    ResgisterPagePresenter presenter;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_register_page, container, false);
 
-        View view_register_page = inflater.inflate(R.layout.fragment_register_page, container, false);
-        register = view_register_page.findViewById(R.id.register);
-        back = view_register_page.findViewById(R.id.back);
-        signUpName = view_register_page.findViewById(R.id.signUpName);
-        signUpPassword = view_register_page.findViewById(R.id.signUpPassword);
+    }
+
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        register = view.findViewById(R.id.register);
+        back = view.findViewById(R.id.back);
+        signUpName = view.findViewById(R.id.signUpName);
+        signUpPassword = view.findViewById(R.id.signUpPassword);
+
+        presenter = new ResgisterPagePresenter();
+        presenter.setView(this);
+
 
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginPageFragment login_page = new LoginPageFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.container, login_page);
-                ft.commit();
+                presenter.onBackClick();
             }
         });
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Gson gson = new Gson();
-                User user = new User();
-
-                user.userName = signUpName.getText().toString();
-                user.passwd = signUpPassword.getText().toString();
-                AndroidNetworking.post("https://hinl.app:9990/billy/register")
-                        .addBodyParameter("data", gson.toJson(user)) // posting json
-                        .setTag("test")
-                        .setPriority(Priority.MEDIUM)
-                        .build()
-                        .getAsString(new StringRequestListener() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    if (response != null) {
-
-                                        UserToken userToken = gson.fromJson(response, UserToken.class);
-                                        Log.d("TAG", "onResponse: " + userToken.token);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-
-                            @Override
-                            public void onError(ANError anError) {
-                                anError.printStackTrace();
-                            }
-                        });
-
+                presenter.onRegisterClick(signUpName.getText().toString(), signUpPassword.getText().toString());
             }
         });
-        return view_register_page;
+
     }
 
+    @Override
+    public void showLoginPage() {
+        LoginPageFragment login_page = new LoginPageFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.container, login_page);
+        ft.commit();
+    }
 
+    @Override
+    public void usernameTooShortError() {
+
+    }
+
+    @Override
+    public void usernameTooLongError() {
+
+    }
+
+    @Override
+    public void passwordTooShortError() {
+
+    }
+
+    @Override
+    public void passwordTooLongError() {
+
+    }
+
+    @Override
+    public void serverResponseError(String error) {
+        // show serverResponse not in a toast way
+    }
 }
