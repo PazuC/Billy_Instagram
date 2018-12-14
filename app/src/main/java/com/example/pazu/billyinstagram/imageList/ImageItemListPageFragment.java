@@ -38,7 +38,7 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
     private RecyclerView recyclerView;
     private ImageItemAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    ImageItemListPresenter presenter;
+    ImageItemListPagePresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +51,7 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter = new ImageItemListPresenter();
+        presenter = new ImageItemListPagePresenter();
         presenter.setView(this);
 
         add = view.findViewById(R.id.add);
