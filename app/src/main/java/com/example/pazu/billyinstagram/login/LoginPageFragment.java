@@ -38,6 +38,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     private EditText userName;
     private EditText password;
     private TextView userNameError;
+    private TextView passwordError;
     LoginPagePresenter presenter;
 
 
@@ -46,7 +47,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-       return inflater.inflate(R.layout.fragment_login_page, container, false);
+        return inflater.inflate(R.layout.fragment_login_page, container, false);
 
     }
 
@@ -59,17 +60,37 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
         userName = view.findViewById(R.id.userName);
         password = view.findViewById(R.id.password);
         userNameError = view.findViewById(R.id.userNameError);
+        passwordError = view.findViewById(R.id.passwordError);
         presenter = new LoginPagePresenter();
         presenter.setView(this);
+        userName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() < 8) {
+                    usernameTooShortError();
+                } else if (s.length() > 30) {
+                    usernameTooLongError();
+                } else {
+                    userNameError.setText("");
+                }
+            }
+        });
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onLoginClick(userName.getText().toString(),password.getText().toString());
+                presenter.onLoginClick(userName.getText().toString(), password.getText().toString());
             }
         });
 
@@ -106,33 +127,28 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void usernameTooShortError() {
-       userNameError.setText("too short");
+        userNameError.setText("* Username length should be more than 8");
     }
 
     @Override
     public void usernameTooLongError() {
-        int length = userName.getText().toString().length();
-        if (length > 30) {
-
-        }
+        userNameError.setText("* Username length should be less than 30");
     }
 
     @Override
     public void passwordTooShortError() {
-
-        }
+        passwordError.setText("* Password length should be more than 8");
+    }
 
 
     @Override
     public void passwordTooLongError() {
-        int length = password.getText().toString().length();
-        if (length > 30) {
-
-        }
+        passwordError.setText("* Password length should be less than 30");
     }
 
     @Override
     public void serverResponseError(String error) {
-        // show serverResponse not in a toast way
+        Toast toast=Toast.makeText(getContext(),error,Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
