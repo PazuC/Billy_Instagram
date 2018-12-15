@@ -153,7 +153,7 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
     }
 
     @Override
-    public void showSuccessRegister(String string) {
-        registerSuccessMessage.setText("register succeed! Your id is " + string);
+    public void showSuccessRegister() {
+        registerSuccessMessage.setText("register succeed! Your id is " + signUpName.getText().toString());
     }
 }

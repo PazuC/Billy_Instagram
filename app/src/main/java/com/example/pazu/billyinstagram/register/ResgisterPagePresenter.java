@@ -37,7 +37,7 @@ public class ResgisterPagePresenter implements ResgisterContract.Presenter {
                             if (response != null) {
 
                                 UserToken userToken = gson.fromJson(response, UserToken.class);
-                                view.showSuccessRegister(userToken.token);
+                                view.showSuccessRegister();
                                 Log.d("TAG", "onResponse: " + userToken.token);
                             }
                         } catch (Exception e) {

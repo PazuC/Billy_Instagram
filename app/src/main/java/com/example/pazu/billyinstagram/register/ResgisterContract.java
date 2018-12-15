@@ -19,7 +19,7 @@ public interface ResgisterContract {
 
         void passwordNoError();
 
-        void showSuccessRegister(String string);
+        void showSuccessRegister();
     }
 
     interface Presenter {
