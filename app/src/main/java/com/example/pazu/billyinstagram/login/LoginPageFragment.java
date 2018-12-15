@@ -76,13 +76,23 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() < 8) {
-                    usernameTooShortError();
-                } else if (s.length() > 30) {
-                    usernameTooLongError();
-                } else {
-                    userNameError.setText("");
-                }
+                presenter.onChangeUsername(s.toString());
+            }
+        });
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.onChangePassword(s.toString());
             }
         });
 
@@ -140,15 +150,25 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
         passwordError.setText("* Password length should be more than 8");
     }
 
-
     @Override
     public void passwordTooLongError() {
         passwordError.setText("* Password length should be less than 30");
     }
 
+
     @Override
     public void serverResponseError(String error) {
         Toast toast=Toast.makeText(getContext(),error,Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void usernameNoError() {
+        userNameError.setText("");
+    }
+
+    @Override
+    public void passwordNoError() {
+        passwordError.setText("");
     }
 }
