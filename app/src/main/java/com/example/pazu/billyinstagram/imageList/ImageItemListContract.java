@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.example.pazu.billyinstagram.login.LoginContract;
 
-
 public interface ImageItemListContract {
     interface View {
         void showAddImageItemPage(String string);
