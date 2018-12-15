@@ -1,19 +1,13 @@
 package com.example.pazu.billyinstagram.login;
 
-import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 
+import android.util.Log;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
-import com.example.pazu.billyinstagram.R;
 import com.example.pazu.billyinstagram.model.user.User;
 import com.example.pazu.billyinstagram.model.user.UserToken;
-import com.example.pazu.billyinstagram.register.RegisterPageFragment;
 import com.google.gson.Gson;
 
 public class LoginPagePresenter implements LoginContract.Presenter {

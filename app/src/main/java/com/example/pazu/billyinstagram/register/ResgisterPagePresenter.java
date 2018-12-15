@@ -10,7 +10,7 @@ import com.example.pazu.billyinstagram.model.user.User;
 import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
-public class ResgisterPagePresenter implements ResgisterContract.Presenter{
+public class ResgisterPagePresenter implements ResgisterContract.Presenter {
     ResgisterContract.View view;
 
     @Override

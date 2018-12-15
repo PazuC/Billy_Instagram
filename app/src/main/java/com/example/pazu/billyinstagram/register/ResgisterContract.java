@@ -1,6 +1,7 @@
 package com.example.pazu.billyinstagram.register;
 
 public interface ResgisterContract {
+
     interface View {
         void showLoginPage();
 

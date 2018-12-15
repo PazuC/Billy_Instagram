@@ -20,7 +20,7 @@ public class ImageItemAdapter extends RecyclerView.Adapter<ImageItemAdapter.View
 
     private ArrayList<ImageItemResponse.Data> dataList = new ArrayList<>();
 
-    public void setDataList(List<ImageItemResponse.Data> dataList){
+    public void setDataList(List<ImageItemResponse.Data> dataList) {
         this.dataList.clear();
         this.dataList.addAll(dataList);
         this.notifyDataSetChanged();

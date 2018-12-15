@@ -41,7 +41,6 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     private TextView passwordError;
     LoginPagePresenter presenter;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -158,7 +157,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void serverResponseError(String error) {
-        Toast toast=Toast.makeText(getContext(),error,Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getContext(), error, Toast.LENGTH_SHORT);
         toast.show();
     }
 

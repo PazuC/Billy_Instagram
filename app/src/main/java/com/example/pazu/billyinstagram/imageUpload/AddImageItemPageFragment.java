@@ -42,7 +42,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddImageItemPageFragment extends Fragment implements AddimageItemContract.View{
+public class AddImageItemPageFragment extends Fragment implements AddimageItemContract.View {
 
     private static final int PHOTO_ALBUM_REQUEST_CODE = 0x10;
     ImageView imageView;
@@ -53,6 +53,7 @@ public class AddImageItemPageFragment extends Fragment implements AddimageItemCo
     Button back;
     File imageFile;
     AddImageItemPagePresenter presenter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class AddImageItemPageFragment extends Fragment implements AddimageItemCo
             @Override
             public void onClick(View v) {
                 String token = getArguments().getString("Token");
-                presenter.onUploadClick(imageFile,title.getText().toString(),description.getText().toString(),token);
+                presenter.onUploadClick(imageFile, title.getText().toString(), description.getText().toString(), token);
             }
         });
 
@@ -96,7 +97,6 @@ public class AddImageItemPageFragment extends Fragment implements AddimageItemCo
                 presenter.onAddClick();
             }
         });
-
 
 
     }

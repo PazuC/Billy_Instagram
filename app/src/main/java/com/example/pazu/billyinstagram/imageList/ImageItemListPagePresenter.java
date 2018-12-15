@@ -15,6 +15,7 @@ import com.example.pazu.billyinstagram.model.image.ImageItemResponse;
 import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
+
 public class ImageItemListPagePresenter implements ImageItemListContract.Presenter {
     ImageItemListContract.View view;
 

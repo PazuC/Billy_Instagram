@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 
+
 public class AddImageItemPagePresenter implements AddimageItemContract.Presenter {
     AddimageItemContract.View view;
 

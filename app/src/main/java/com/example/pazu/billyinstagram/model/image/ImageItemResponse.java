@@ -2,6 +2,7 @@ package com.example.pazu.billyinstagram.model.image;
 
 import java.util.ArrayList;
 
+
 public class ImageItemResponse {
     public String name;
     public ArrayList<Data> data;

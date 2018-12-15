@@ -27,7 +27,6 @@ import com.example.pazu.billyinstagram.model.image.ImageItemResponse;
 import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
