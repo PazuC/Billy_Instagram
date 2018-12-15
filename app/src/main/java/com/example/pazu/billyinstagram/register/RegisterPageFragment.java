@@ -6,11 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.pazu.billyinstagram.R;
 import com.example.pazu.billyinstagram.login.LoginPageFragment;
 
@@ -22,9 +26,10 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
     private Button back;
     EditText signUpName;
     EditText signUpPassword;
+    TextView userNameError;
+    TextView passwordError;
 
     ResgisterPagePresenter presenter;
-
 
 
     @Override
@@ -43,10 +48,44 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
         back = view.findViewById(R.id.back);
         signUpName = view.findViewById(R.id.signUpName);
         signUpPassword = view.findViewById(R.id.signUpPassword);
+        userNameError = view.findViewById(R.id.userNameError);
+        passwordError = view.findViewById(R.id.passwordError);
 
         presenter = new ResgisterPagePresenter();
         presenter.setView(this);
 
+        signUpName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.onChangeUsername(s.toString());
+            }
+        });
+        signUpPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.onChangePassword(s.toString());
+            }
+        });
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -75,26 +114,36 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
 
     @Override
     public void usernameTooShortError() {
-
+        userNameError.setText("* Username length should be more than 8");
     }
 
     @Override
     public void usernameTooLongError() {
-
+        userNameError.setText("* Username length should be less than 30");
     }
 
     @Override
     public void passwordTooShortError() {
-
+        passwordError.setText("* Password length should be more than 8");
     }
 
     @Override
     public void passwordTooLongError() {
-
+        passwordError.setText("* Password length should be less than 30");
     }
 
     @Override
     public void serverResponseError(String error) {
         // show serverResponse not in a toast way
+    }
+
+    @Override
+    public void usernameNoError() {
+        userNameError.setText("");
+    }
+
+    @Override
+    public void passwordNoError() {
+        passwordError.setText("");
     }
 }

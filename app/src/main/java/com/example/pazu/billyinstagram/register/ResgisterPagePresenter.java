@@ -60,11 +60,23 @@ public class ResgisterPagePresenter implements ResgisterContract.Presenter {
 
     @Override
     public void onChangeUsername(String username) {
-
+        if (username.length() < 8) {
+            view.usernameTooShortError();
+        } else if (username.length() > 30) {
+            view.usernameTooLongError();
+        } else {
+            view.usernameNoError();
+        }
     }
 
     @Override
     public void onChangePassword(String password) {
-
+        if (password.length() < 8) {
+            view.passwordTooShortError();
+        } else if (password.length() > 30) {
+            view.passwordTooLongError();
+        } else {
+            view.passwordNoError();
+        }
     }
 }

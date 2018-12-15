@@ -18,12 +18,26 @@
             android:hint="User name"
             android:textSize="15dp" />
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/userNameError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/holo_red_light" />
+
         <EditText
             android:id="@+id/signUpPassword"
             android:layout_width="400dp"
             android:layout_height="40dp"
             android:hint="Password"
             android:textSize="15dp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/passwordError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/holo_red_light" />
 
         <Button
             android:id="@+id/register"

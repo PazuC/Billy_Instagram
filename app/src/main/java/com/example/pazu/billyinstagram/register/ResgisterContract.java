@@ -14,6 +14,10 @@ public interface ResgisterContract {
         void passwordTooLongError();
 
         void serverResponseError(String error);
+
+        void usernameNoError();
+
+        void passwordNoError();
     }
 
     interface Presenter {

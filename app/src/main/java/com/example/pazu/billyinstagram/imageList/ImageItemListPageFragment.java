@@ -27,6 +27,8 @@ import com.example.pazu.billyinstagram.model.image.ImageItemResponse;
 import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -59,7 +61,9 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
 
         String token = getArguments().getString("Token");
         presenter.requestImage(token);
-
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter(imageItemAdapter);!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,16 +74,6 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
         });
     }
 
-    @Override
-    public void setAdapter(ImageItemAdapter imageItemAdapter) {
-        recyclerView.setAdapter(imageItemAdapter);
-    }
-
-    @Override
-    public void setLayoutManager() {
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-    }
 
     @Override
     public void showAddImageItemPage(String string) {

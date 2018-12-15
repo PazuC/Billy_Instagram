@@ -44,10 +44,10 @@ public class ImageItemListPagePresenter implements ImageItemListContract.Present
                                 ImageItemResponse imageItemResponse = gson.fromJson(response, ImageItemResponse.class);
                                 view.showIdTextView(imageItemResponse.name);
 
+
                                 ImageItemAdapter adapter = new ImageItemAdapter();
                                 adapter.setDataList(imageItemResponse.data);
-                                view.setLayoutManager();
-                                view.setAdapter(adapter);
+                                //fetch to view!!!!!!!!!!!!!!!!!!!!!!!
 
                                 Log.d("TAG", "onResponse: ");
 
