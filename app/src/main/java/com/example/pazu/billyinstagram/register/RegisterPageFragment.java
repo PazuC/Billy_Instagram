@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pazu.billyinstagram.R;
+import com.example.pazu.billyinstagram.imageList.ImageItemListPageFragment;
 import com.example.pazu.billyinstagram.login.LoginPageFragment;
 
 /**
@@ -153,7 +154,15 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
     }
 
     @Override
-    public void showSuccessRegister() {
-        registerSuccessMessage.setText("register succeed! Your id is " + signUpName.getText().toString());
+    public void showImageListPage(String string) {
+        ImageItemListPageFragment imageItemListPageFragment = new ImageItemListPageFragment();
+        Bundle args = new Bundle();
+        args.putString("Token", string);
+        imageItemListPageFragment.setArguments(args);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.container, imageItemListPageFragment);
+        ft.commit();
     }
+
 }

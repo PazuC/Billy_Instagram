@@ -19,7 +19,7 @@ public interface ResgisterContract {
 
         void passwordNoError();
 
-        void showSuccessRegister();
+        void showImageListPage(String string);
     }
 
     interface Presenter {
@@ -32,5 +32,7 @@ public interface ResgisterContract {
         void onChangeUsername(String username);
 
         void onChangePassword(String password);
+
+        void registerSucceed(String username,String password);
     }
 }
