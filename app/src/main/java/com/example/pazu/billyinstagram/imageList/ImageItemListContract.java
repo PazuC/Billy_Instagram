@@ -5,13 +5,15 @@ import android.view.View;
 import com.example.pazu.billyinstagram.login.LoginContract;
 import com.example.pazu.billyinstagram.model.image.ImageItemResponse;
 
+import java.util.ArrayList;
+
 public interface ImageItemListContract {
     interface View {
         void showAddImageItemPage(String string);
 
         void showIdTextView(String string);
 
-        //void receiveImageItem(ImageItemResponse data);
+        void receiveImageItem(ArrayList<ImageItemResponse.Data> dataList);
     }
 
     interface Presenter {
