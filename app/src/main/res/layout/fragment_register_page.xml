@@ -51,6 +51,13 @@
             android:layout_height="wrap_content"
             android:text="back" />
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/registerSuccessMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/holo_green_light" />
+
 
     </LinearLayout>
 </FrameLayout>

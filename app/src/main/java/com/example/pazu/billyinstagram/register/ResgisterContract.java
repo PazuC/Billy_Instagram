@@ -18,6 +18,8 @@ public interface ResgisterContract {
         void usernameNoError();
 
         void passwordNoError();
+
+        void showSuccessRegister(String string);
     }
 
     interface Presenter {

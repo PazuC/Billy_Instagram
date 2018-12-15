@@ -1,6 +1,7 @@
 package com.example.pazu.billyinstagram.register;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pazu.billyinstagram.R;
 import com.example.pazu.billyinstagram.login.LoginPageFragment;
@@ -28,6 +30,7 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
     EditText signUpPassword;
     TextView userNameError;
     TextView passwordError;
+    TextView registerSuccessMessage;
 
     ResgisterPagePresenter presenter;
 
@@ -50,6 +53,7 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
         signUpPassword = view.findViewById(R.id.signUpPassword);
         userNameError = view.findViewById(R.id.userNameError);
         passwordError = view.findViewById(R.id.passwordError);
+        registerSuccessMessage = view.findViewById(R.id.registerSuccessMessage);
 
         presenter = new ResgisterPagePresenter();
         presenter.setView(this);
@@ -134,7 +138,8 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
 
     @Override
     public void serverResponseError(String error) {
-        // show serverResponse not in a toast way
+        Toast toast = Toast.makeText(getContext(), error, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     @Override
@@ -145,5 +150,10 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
     @Override
     public void passwordNoError() {
         passwordError.setText("");
+    }
+
+    @Override
+    public void showSuccessRegister(String string) {
+        registerSuccessMessage.setText("register succeed! Your id is " + string);
     }
 }
