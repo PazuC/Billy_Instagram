@@ -40,7 +40,7 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
     private RecyclerView recyclerView;
     private ImageItemAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    ImageItemListPagePresenter presenter;
+    ImageItemListContract.Presenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +65,7 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
         layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
         presenter.requestImage(token);
 
 
@@ -81,7 +82,7 @@ public class ImageItemListPageFragment extends Fragment implements ImageItemList
     @Override
     public void receiveImageItem(ArrayList<ImageItemResponse.Data> dataList) {
         adapter.setDataList(dataList);
-        recyclerView.setAdapter(adapter);
+
     }
 
     @Override

@@ -52,7 +52,7 @@ public class AddImageItemPageFragment extends Fragment implements AddimageItemCo
     Button upload;
     Button back;
     File imageFile;
-    AddImageItemPagePresenter presenter;
+    AddimageItemContract.Presenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

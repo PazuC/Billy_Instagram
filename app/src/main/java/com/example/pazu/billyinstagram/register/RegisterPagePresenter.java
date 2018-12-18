@@ -12,11 +12,11 @@ import com.example.pazu.billyinstagram.model.user.User;
 import com.example.pazu.billyinstagram.model.user.UserToken;
 import com.google.gson.Gson;
 
-public class ResgisterPagePresenter implements ResgisterContract.Presenter {
-    ResgisterContract.View view;
+public class RegisterPagePresenter implements RegisterContract.Presenter {
+    RegisterContract.View view;
 
     @Override
-    public void setView(ResgisterContract.View view) {
+    public void setView(RegisterContract.View view) {
         this.view = view;
     }
 

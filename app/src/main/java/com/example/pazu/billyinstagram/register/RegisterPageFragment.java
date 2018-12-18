@@ -24,7 +24,7 @@ import com.example.pazu.billyinstagram.login.LoginPageFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterPageFragment extends Fragment implements ResgisterContract.View {
+public class RegisterPageFragment extends Fragment implements RegisterContract.View {
     private Button register;
     private Button back;
     EditText signUpName;
@@ -33,7 +33,7 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
     TextView passwordError;
     TextView registerSuccessMessage;
 
-    ResgisterPagePresenter presenter;
+    RegisterContract.Presenter presenter;
 
 
     @Override
@@ -56,7 +56,7 @@ public class RegisterPageFragment extends Fragment implements ResgisterContract.
         passwordError = view.findViewById(R.id.passwordError);
         registerSuccessMessage = view.findViewById(R.id.registerSuccessMessage);
 
-        presenter = new ResgisterPagePresenter();
+        presenter = new RegisterPagePresenter();
         presenter.setView(this);
 
         signUpName.addTextChangedListener(new TextWatcher() {

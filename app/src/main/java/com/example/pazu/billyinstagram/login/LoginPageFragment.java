@@ -39,7 +39,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     private EditText password;
     private TextView userNameError;
     private TextView passwordError;
-    LoginPagePresenter presenter;
+    LoginContract.Presenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
