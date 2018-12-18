@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
         password = view.findViewById(R.id.password);
         userNameError = view.findViewById(R.id.userNameError);
         passwordError = view.findViewById(R.id.passwordError);
+        password.setTransformationMethod(new AsteriskPasswordTransformationMethod());
         presenter = new LoginPagePresenter();
         presenter.setView(this);
         userName.addTextChangedListener(new TextWatcher() {
@@ -170,4 +172,29 @@ public class LoginPageFragment extends Fragment implements LoginContract.View {
     public void passwordNoError() {
         passwordError.setText("");
     }
+
+
+public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {
+    @Override
+    public CharSequence getTransformation(CharSequence source, View view) {
+        return new PasswordCharSequence(source);
+    }
+
+    private class PasswordCharSequence implements CharSequence {
+        private CharSequence mSource;
+        public PasswordCharSequence(CharSequence source) {
+            mSource = source; // Store char sequence
+        }
+        public char charAt(int index) {
+            return '*'; // This is the important part
+        }
+        public int length() {
+            return mSource.length(); // Return default
+        }
+        public CharSequence subSequence(int start, int end) {
+            return mSource.subSequence(start, end); // Return default
+        }
+    }
+}
+
 }

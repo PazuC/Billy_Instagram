@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,8 @@ public class RegisterPageFragment extends Fragment implements RegisterContract.V
         userNameError = view.findViewById(R.id.userNameError);
         passwordError = view.findViewById(R.id.passwordError);
         registerSuccessMessage = view.findViewById(R.id.registerSuccessMessage);
+
+        signUpPassword.setTransformationMethod(new AsteriskPasswordTransformationMethod());
 
         presenter = new RegisterPagePresenter();
         presenter.setView(this);
@@ -164,5 +167,26 @@ public class RegisterPageFragment extends Fragment implements RegisterContract.V
         ft.replace(R.id.container, imageItemListPageFragment);
         ft.commit();
     }
+    public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            return new AsteriskPasswordTransformationMethod.PasswordCharSequence(source);
+        }
 
+        private class PasswordCharSequence implements CharSequence {
+            private CharSequence mSource;
+            public PasswordCharSequence(CharSequence source) {
+                mSource = source; // Store char sequence
+            }
+            public char charAt(int index) {
+                return '*'; // This is the important part
+            }
+            public int length() {
+                return mSource.length(); // Return default
+            }
+            public CharSequence subSequence(int start, int end) {
+                return mSource.subSequence(start, end); // Return default
+            }
+        }
+    }
 }
